@@ -24,6 +24,7 @@ class ProductForm extends Component {
         })
     }
     
+    //We now only use handle save in this componet it creates a post request to add a new product to the database, and calls fetchPrroducts to set the state after successful post request  
     handleSave = async (e) => {
       e.preventDefault();
         
@@ -44,7 +45,7 @@ class ProductForm extends Component {
                 product: { ...RESET_VALUES },
                 errors: {} // Reset errors if needed
               }), async () => {
-                // After updating state with the new product, fetch all products
+                // After a successful post request call fetchProducts method to get all products from the database and set state.
                 await this.props.onSave();
               });
              

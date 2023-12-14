@@ -5,7 +5,7 @@ class ProductRow extends Component {
         super(props)
         this.destroy = this.destroy.bind(this)
     }
-    
+    //We now only handle destroying products in this component only. This method sends a delete request to the database. 
     async destroy() {
         try {
           const productid = this.props.productid  
@@ -20,7 +20,7 @@ class ProductRow extends Component {
           
           if (response.ok) {
             
-            await this.props.onDestroy(); // After deleteing a product fetch all products
+            await this.props.onDestroy(); // After deleteing a product fetch all products from database and set state
           }
 
         } catch (error) {
@@ -28,10 +28,6 @@ class ProductRow extends Component {
         }
       }
 
-    // destroy() {
-    //     this.props.onDestroy(this.props.product.id);
-    // }
-    
     render () {
         return (
             <tr>

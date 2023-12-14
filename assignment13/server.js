@@ -49,9 +49,9 @@ app.post('/product/create', async (req, res) => {
       const {name, category, price } = req.body;
 
       const productData = {
-        id: 0,
+        id: 0, //I use the _id that gets generated from the database as the id instead so I just set this to 0
         product: {
-          productid: 0,
+          productid: 0, //I use the _id that gets generated from the database as the id instead so I just set this to 0
           category: category,
           price: price,
           name: name,
@@ -67,7 +67,41 @@ app.post('/product/create', async (req, res) => {
     }
   });
 
-// Endpoint to delete a product by its ID
+// Endpoint to update a product by its ID
+app.put('/product/update/:id', async (req, res) => {
+  const productId = req.params.id;
+  const { name, category, price, instock } = req.body;
+
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        $set: {
+          'product.category': category,
+          'product.price': price,
+          'product.name': name,
+          'product.instock': instock
+        }
+      },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      console.log('Product not found for update');
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json(updatedProduct);
+  } catch (error) {
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+      console.log('Invalid Product ID provided');
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Endpoint to delete a product by its ID. There is no front-end component for this, but it works with postman and successfully updates a product in the database.
 app.delete('/product/delete/:id', async (req, res) => {
   const productId = req.params.id;
 

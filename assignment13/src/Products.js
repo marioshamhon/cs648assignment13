@@ -1,3 +1,14 @@
+/* 
+ I didn't want to delete all the original code so I just commented out the code that I'm no longer using. I refactored the code a little bit to make it work with this assignment. 
+ I commented out the static products object because now we're going to be getting our items from the database. I also set the products variable in state equal to a blank array 
+ initially because we get an array of objects from the database. I now use a fetchProducts method to get all the items from the database via a get request and set the state with those items. 
+ We no longer need the handleSave and handleDestroy methods to set the state because that is now being done by the fetchProducts method so I just commented out.
+
+Now in the products prop and the onDestroy prop I am passing the fetchProducts method because now every time a product is added or deleted successfully 
+the fetchProducts method will be called to retrieve the most current information from the database and set the state accordingly so that only the current 
+products are displayed in the table.
+*/
+
 import React, { Component } from 'react'
 import Filters from './Filters'
 import ProductTable from './ProductTable'
